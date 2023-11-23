@@ -14,4 +14,14 @@ export class ProductService {
   saveProduct(product: Product): Observable<Product> {
     return this._http.post<Product>(this._URL, product);
   }
+
+  getAllProducts(): Observable<Product> {
+    return this._http.get<Product>(this._URL);
+  }
+
+  updateProduct(_id: string | undefined, product: Product): Observable<Product> {
+    return this._http.put<Product>(this._URL + '/' + _id, product); //?? '/' check?
+  }
+
+  deleteProduct(id: string) {}
 }

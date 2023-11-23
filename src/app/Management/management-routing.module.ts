@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core';
+import { NgModule, inject } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CreateProductComponent } from './components/create-product/create-product.component';
 import { ListProductComponent } from './components/list-product/list-product.component';
 import { ManagementMainComponent } from './management-main.component';
+import { ProductService } from '../services/product.service';
 
 const routes: Routes = [
   {
@@ -12,13 +13,16 @@ const routes: Routes = [
       {
         path: 'list',
         component: ListProductComponent,
+        resolve: {
+          productList: () => inject(ProductService).getAllProducts(),
+        },
       },
       {
         path: 'create',
         component: CreateProductComponent,
       },
       {
-        path: 'edit/:id',
+        path: 'edit/:product',
         component: CreateProductComponent,
       },
     ],

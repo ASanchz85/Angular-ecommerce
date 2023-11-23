@@ -7,6 +7,7 @@ import { LoginComponent } from './Login/components/login/login.component';
 import { SignupComponent } from './Login/components/signup/signup.component';
 import { ManagementModule } from './Management/management.module';
 
+
 @NgModule({
   declarations: [
     AppComponent,

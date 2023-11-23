@@ -27,7 +27,11 @@
             </div>
 
             <div class="mb-3">
-              <div class="form-check form-switch">
+              <div
+                class="form-check form-switch"
+                (mouseover)="showPopover()"
+                (mouseleave)="restartPopover()"
+              >
                 <input
                   formControlName="isImgFile"
                   class="form-check-input"
@@ -36,16 +40,33 @@
                   id="flexSwitchCheckChecked"
                   checked
                 />
-                <label class="form-check-label float-start" for="flexSwitchCheckChecked"
-                  >{{(productForm.value.isImgFile) ? 'Upload your image with square format (400px side)' : 'Paste an URL for your image'}}</label
+
+                <label
+                  class="form-check-label float-start"
+                  for="flexSwitchCheckChecked"
                 >
+                  {{
+                    productForm.value.isImgFile
+                      ? glassDisplay
+                        ? "Upload your image "
+                        : popover
+                      : glassDisplay
+                        ? "Paste an URL of an image"
+                        : popover
+                  }}<i
+                    *ngIf="productForm.value.isImgFile && glassDisplay"
+                    class="fa-solid fa-magnifying-glass"
+                  ></i
+                ></label>
               </div>
               <input
-                [type]="(productForm.value.isImgFile) ? 'file' : 'text'"
+                [type]="productForm.value.isImgFile ? 'file' : 'text'"
                 formControlName="image"
                 class="form-control form-control-lg"
                 placeholder="URL for image"
                 (change)="setImg($event)"
+                (mouseover)="showPopover()"
+                (mouseleave)="restartPopover()"
               />
               <div class="text-danger" *ngIf="validateInput('image')">
                 <span>Add your <strong>image</strong> please</span>
@@ -53,7 +74,10 @@
             </div>
 
             <div class="mb-3">
-              <button class="btn btn-secondary btn-lg float-start">
+              <button
+                routerLink="/admin/list"
+                class="btn btn-secondary btn-lg float-start"
+              >
                 Go Back
               </button>
               <button
@@ -66,7 +90,7 @@
             </div>
           </form>
           <div *ngIf="preview">
-            <img [src]="preview" alt="image preview" width="200" height="200" >
+            <img [src]="preview" alt="image preview" width="200" height="200" />
           </div>
         </div>
       </div>

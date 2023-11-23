@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { catchError } from 'rxjs';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
@@ -7,14 +8,21 @@ import { ProductService } from 'src/app/services/product.service';
 @Component({
   selector: 'app-create-product',
   templateUrl: './create-product.component.html',
-  styleUrls: ['./create-product.component.css'],
 })
 export class CreateProductComponent implements OnInit {
   title = 'Create product';
+  popover = '';
+  glassDisplay = true;
   productForm: FormGroup;
   preview!: string;
+  currentProduct!: Product;
 
-  constructor(private _fb: FormBuilder, private _pServ: ProductService) {
+  constructor(
+    private _fb: FormBuilder,
+    private _pServ: ProductService,
+    private _router: Router,
+    private _ar: ActivatedRoute
+  ) {
     this.productForm = this._fb.group({
       name: ['', [Validators.required]],
       category: ['', [Validators.required]],
@@ -25,7 +33,47 @@ export class CreateProductComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.asEdit();
+  }
+
+  showPopover() {
+    if (this.title === 'Create product') {
+      this.popover = 'The image should be a square of at least 400px side';
+      this.glassDisplay = false;
+      this.preview = '../../../../assets/square_example.jpg';
+    }
+  }
+
+  restartPopover() {
+    if (this.title === 'Create product') {
+      this.glassDisplay = true;
+      this.preview = '';
+    }
+  }
+
+  asEdit() {
+    this._ar.paramMap.subscribe((data) => {
+      const productSerialized = data.get('product');
+      if (productSerialized) {
+        this.currentProduct = JSON.parse(decodeURIComponent(productSerialized));
+        this.title = 'Edit Product';
+        this.preview = this.currentProduct.image;
+        this.glassDisplay = false;
+        this.popover =
+          'Remember that the image should be a square of at least 400px side';
+
+        this.productForm.setValue({
+          name: this.currentProduct.name,
+          category: this.currentProduct.category,
+          location: this.currentProduct.location,
+          image: this.currentProduct.image,
+          price: this.currentProduct.price,
+          isImgFile: false,
+        });
+      }
+    });
+  }
 
   addProduct() {
     if (this.productForm.valid) {
@@ -60,12 +108,20 @@ export class CreateProductComponent implements OnInit {
           throw error;
         })
       )
-      .subscribe((data) => {
-        console.log('success!', data);
+      .subscribe(() => {
+        this._router.navigate(['admin', 'list']);
       });
   }
 
-  editProduct() {}
+  editProduct(product: Product) {
+    this._pServ
+      .updateProduct(this.currentProduct._id, product)
+      .pipe(catchError((error) => this.managedErrors(error)))
+      .subscribe((data) => {
+        alert(data);
+        this._router.navigate(['admin', 'list']);
+      });
+  }
 
   validateInput(typeName: string): boolean {
     let obj = this.productForm.get(typeName);
@@ -110,4 +166,16 @@ export class CreateProductComponent implements OnInit {
         console.log('extractBase64 error -> ', err);
       }
     });
-}
+    
+    private managedErrors(error: any) {
+      if (error.status === 500) {
+        alert(error.error);
+        this.productForm.patchValue({ img: '' });
+        this.preview = '';
+      } else {
+        console.error('Unknown Error');
+      }
+      // throw error;
+      return error;
+    }
+  }
