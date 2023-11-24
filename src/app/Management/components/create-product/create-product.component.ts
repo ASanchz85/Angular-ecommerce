@@ -54,7 +54,8 @@ export class CreateProductComponent implements OnInit {
 
   asEdit() {
     this._ar.paramMap.subscribe((data) => {
-      const productSerialized = data.get('product');
+      const productSerialized = data.get('product') || '';
+
       if (productSerialized) {
         this.currentProduct = JSON.parse(decodeURIComponent(productSerialized));
         this.title = 'Edit Product';
@@ -88,7 +89,11 @@ export class CreateProductComponent implements OnInit {
         image: isImgFile ? this.preview : this.productForm.get('image')?.value,
       };
 
-      this.createProduct(product);
+      if (!this.currentProduct) {
+        this.createProduct(product);
+      } else {
+        this.editProduct(product);
+      }
     }
   }
 
@@ -117,8 +122,7 @@ export class CreateProductComponent implements OnInit {
     this._pServ
       .updateProduct(this.currentProduct._id, product)
       .pipe(catchError((error) => this.managedErrors(error)))
-      .subscribe((data) => {
-        alert(data);
+      .subscribe(() => {
         this._router.navigate(['admin', 'list']);
       });
   }
@@ -166,16 +170,16 @@ export class CreateProductComponent implements OnInit {
         console.log('extractBase64 error -> ', err);
       }
     });
-    
-    private managedErrors(error: any) {
-      if (error.status === 500) {
-        alert(error.error);
-        this.productForm.patchValue({ img: '' });
-        this.preview = '';
-      } else {
-        console.error('Unknown Error');
-      }
-      // throw error;
-      return error;
+
+  private managedErrors(error: any) {
+    if (error.status === 500) {
+      alert(error.error);
+      this.productForm.patchValue({ img: '' });
+      this.preview = '';
+    } else {
+      console.error('Managed Error -> Unknown Error');
     }
+    // throw error;
+    return error;
   }
+}

@@ -51,8 +51,8 @@
                         ? "Upload your image "
                         : popover
                       : glassDisplay
-                        ? "Paste an URL of an image"
-                        : popover
+                      ? "Paste an URL of an image"
+                      : popover
                   }}<i
                     *ngIf="productForm.value.isImgFile && glassDisplay"
                     class="fa-solid fa-magnifying-glass"
@@ -64,10 +64,9 @@
                 formControlName="image"
                 class="form-control form-control-lg"
                 placeholder="URL for image"
-                (change)="setImg($event)"
                 (mouseover)="showPopover()"
-                (mouseleave)="restartPopover()"
-              />
+                (change)="setImg($event)"
+                />
               <div class="text-danger" *ngIf="validateInput('image')">
                 <span>Add your <strong>image</strong> please</span>
               </div>
@@ -75,6 +74,7 @@
 
             <div class="mb-3">
               <button
+                type="button"
                 routerLink="/admin/list"
                 class="btn btn-secondary btn-lg float-start"
               >

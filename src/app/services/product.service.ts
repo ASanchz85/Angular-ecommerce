@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ProductService {
-  private _URL = 'http://localhost:3000/api/products';
+  private _URL = 'http://localhost:3000/api/products/';
 
   constructor(private _http: HttpClient) {}
 
@@ -19,9 +19,11 @@ export class ProductService {
     return this._http.get<Product>(this._URL);
   }
 
-  updateProduct(_id: string | undefined, product: Product): Observable<Product> {
-    return this._http.put<Product>(this._URL + '/' + _id, product); //?? '/' check?
+  updateProduct(_id: any, product: Product): Observable<Product> {
+    return this._http.put<Product>(this._URL + _id, product);
   }
 
-  deleteProduct(id: string) {}
+  deleteProduct(_id: any): Observable<Product> {
+    return this._http.delete<Product>(this._URL + _id)
+  }
 }
