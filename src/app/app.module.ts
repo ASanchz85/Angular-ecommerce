@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './Login/components/login/login.component';
 import { SignupComponent } from './Login/components/signup/signup.component';
 import { ManagementModule } from './Management/management.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { ManagementModule } from './Management/management.module';
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     ManagementModule,
   ],

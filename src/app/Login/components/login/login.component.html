@@ -1,1 +1,65 @@
-<a routerLink="/admin/create" class="btn btn-secondary">Ir a Create</a>
+<div class="container mt-5">
+  <a routerLink="/admin/create" class="btn btn-secondary mb-5">Ir a Create</a>
+  <div class="row">
+    <div class="col-lg-6 offset-lg-3">
+      <div class="card">
+        <div class="card-body text-center">
+          <span class="title">{{ title | uppercase }}</span>
+          <form class="mt-3" [formGroup]="loginForm" (ngSubmit)="login()">
+            <div class="mb-3" *ngFor="let param of ['userName', 'password']">
+              <input
+                [type]="param !== 'password' ? 'text' : 'password'"
+                [formControlName]="param"
+                class="form-control form-control-lg"
+                [placeholder]="param | titlecase"
+              />
+              <div
+                class="text-warning"
+                *ngIf="
+                  loginForm.get(param)?.hasError('required') &&
+                  loginForm.get(param)?.touched
+                "
+              >
+                <span
+                  ><strong>{{ param | titlecase }}</strong> is mandatory</span
+                >
+              </div>
+              <div
+                class="text-danger"
+                *ngIf="
+                  loginForm.get(param)?.hasError('pattern') &&
+                  loginForm.get(param)?.dirty
+                "
+              >
+                <span
+                  ><strong>{{ param | uppercase }}</strong>
+                  {{
+                    param !== "password"
+                      ? "should have at least three characters"
+                      : "should have at least eight characters, including numbers and special characters"
+                  }}</span
+                >
+              </div>
+            </div>
+            <div class="mb-3">
+              <button
+                type="button"
+                routerLink="/signup"
+                class="btn btn-secondary btn-lg float-start"
+              >
+                Sign up
+              </button>
+              <button
+                type="submit"
+                class="btn btn-success btn-lg float-end"
+                [disabled]="loginForm.invalid"
+              >
+                Sign in
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

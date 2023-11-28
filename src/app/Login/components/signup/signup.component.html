@@ -1,1 +1,95 @@
-<p>signup works!</p>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-6 offset-lg-3">
+      <div class="card">
+        <div class="card-body text-center">
+          <span class="title">{{ title | uppercase }}</span>
+          <form class="mt-3" [formGroup]="signupForm" (ngSubmit)="register()">
+            <div
+              class="mb-3"
+              *ngFor="
+                let param of [
+                  'userName',
+                  'email',
+                  'password',
+                  'confirmPassword'
+                ]
+              "
+            >
+              <input
+                [type]="
+                  param !== 'password'
+                    ? param !== 'confirmPassword'
+                      ? 'text'
+                      : 'password'
+                    : 'password'
+                "
+                [formControlName]="param"
+                class="form-control form-control-lg"
+                [placeholder]="
+                  param !== 'confirmPassword'
+                    ? (param | titlecase)
+                    : 'Confirm Password'
+                "
+              />
+              <div
+                class="text-warning"
+                *ngIf="
+                  signupForm.get(param)?.hasError('required') &&
+                  signupForm.get(param)?.touched
+                "
+              >
+                <span
+                  ><strong>{{
+                    param !== "confirmPassword"
+                      ? (param | titlecase)
+                      : "Confirm Password"
+                  }}</strong>
+                  is mandatory</span
+                >
+              </div>
+              <div
+                class="text-danger"
+                *ngIf="
+                  signupForm.get(param)?.hasError('pattern') &&
+                  signupForm.get(param)?.dirty
+                "
+              >
+                <span
+                  ><strong>{{
+                    param !== "confirmPassword"
+                      ? (param | uppercase)
+                      : "CONFIRM PASSWORD"
+                  }}</strong>
+                  {{
+                    param !== "password"
+                      ? param !== "email"
+                        ? "should have at least three characters"
+                        : "should be a correct email address"
+                      : "should have at least eight characters, including numbers and special characters"
+                  }}</span
+                >
+              </div>
+            </div>
+            <div class="mb-3">
+              <button
+                type="button"
+                routerLink="/"
+                class="btn btn-secondary btn-lg float-start"
+              >
+                Go Back
+              </button>
+              <button
+                type="submit"
+                class="btn btn-success btn-lg float-end"
+                [disabled]="signupForm.invalid"
+              >
+                Confirm
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
