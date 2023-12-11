@@ -8,7 +8,6 @@ import { SignupComponent } from './Login/components/signup/signup.component';
 import { ManagementModule } from './Management/management.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
 @NgModule({
   declarations: [
     AppComponent,

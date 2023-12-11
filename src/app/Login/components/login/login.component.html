@@ -6,7 +6,7 @@
         <div class="card-body text-center">
           <span class="title">{{ title | uppercase }}</span>
           <form class="mt-3" [formGroup]="loginForm" (ngSubmit)="login()">
-            <div class="mb-3" *ngFor="let param of ['userName', 'password']">
+            <div class="mb-3" *ngFor="let param of ['username', 'password']">
               <input
                 [type]="param !== 'password' ? 'text' : 'password'"
                 [formControlName]="param"

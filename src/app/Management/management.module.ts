@@ -6,17 +6,19 @@ import { ListProductComponent } from './components/list-product/list-product.com
 import { ManagementRoutingModule } from './management-routing.module';
 import { ManagementMainComponent } from './management-main.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { GlobalModule } from '../Global/global.module';
 
 @NgModule({
   declarations: [
     ManagementMainComponent,
     CreateProductComponent,
-    ListProductComponent,
+    ListProductComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
+    GlobalModule,
     ManagementRoutingModule,
   ],
 })
