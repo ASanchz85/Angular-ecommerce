@@ -21,24 +21,65 @@
             </thead>
             <tbody>
               <tr *ngFor="let product of productsList">
-                <td>{{ product.name }}</td>
-                <td>{{ product.category }}</td>
-                <td>{{ product.location }}</td>
-                <td>{{ product.price | currency : "EUR" }}</td>
-                <td>
+                <td class="table-layout">{{ product.name }}</td>
+                <td class="table-layout">{{ product.category }}</td>
+                <td class="table-layout">{{ product.location }}</td>
+                <td class="table-layout">{{ product.price | currency : "EUR" }}</td>
+                <td style="padding: 10px 0 10px 0;">
                   <img
                     [src]="product.image"
+                    style="border-radius: 10px;"
                     height="50"
                     width="50"
                     [alt]="product.name"
                   />
                   <!-- modal para mostrar imagen -->
                 </td>
-                <td>
-                  <i (click)="editProduct(product)" type="button" class="fas fa-edit text-primary"></i>
-                  <i (click)="deleteProduct(product)" type="button" class="fas fa-trash text-danger"></i>
-                </td>
-                  <!-- modal para editar / borrar -->
+                <ng-template [appRoles]="['Employee', 'Admin']">
+                  <td>
+                    <i
+                      (click)="editProduct(product)"
+                      type="button"
+                      class="fas fa-edit text-primary"
+                      style="font-size: 1.4rem;"
+                    ></i>
+                    <span>&nbsp;&nbsp;</span>
+                    <i
+                      (click)="deleteProduct(product)"
+                      type="button"
+                      class="fas fa-trash text-danger"
+                      style="font-size: 1.4rem;"
+                    ></i></td
+                ></ng-template>
+               <!--  <ng-template [appRoles]="['Seller']"> -->
+                  <td class="table-layout">
+                    <input
+                      [(ngModel)]="stock"
+                      class="input-custom"
+                      placeholder="stock"
+                      type="number"
+                      min="1"
+                      max="10"
+                      />
+                      <span>Units&nbsp;&nbsp;</span>
+                    <input
+                      [(ngModel)]="margin"
+                      class="input-custom"
+                      placeholder="margin"
+                      type="number"
+                      min="10"
+                      max="20"
+                    />
+                    <span>%&nbsp;&nbsp;</span>
+                    <i
+                      (click)="salesCorner(product)"
+                      type="button"
+                      class="fa-solid fa-circle-plus text-primary"
+                      style="font-size: 1.4rem;"
+                    ></i>
+                  </td>
+             <!--  </ng-template> -->
+                <!-- modal para editar / borrar -->
               </tr>
             </tbody>
           </table>

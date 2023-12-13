@@ -42,7 +42,7 @@ export class LoginComponent {
         if (!res.success) alert(res.msg);
         else {
           console.log(res.msg);
-          this._router.navigate(['admin', 'create'], {
+          this._router.navigate(['shop', 'catalogue'], {
             relativeTo: this._activRoute,
           });
         }

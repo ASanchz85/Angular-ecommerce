@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateProductComponent } from './components/create-product/create-product.component';
 import { ListProductComponent } from './components/list-product/list-product.component';
-import { ManagementRoutingModule } from './management-routing.module';
 import { ManagementMainComponent } from './management-main.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GlobalModule } from '../Global/global.module';
+import { GlobalRoutingModule } from '../Global/global-routing.module';
 
 @NgModule({
   declarations: [
@@ -16,10 +16,11 @@ import { GlobalModule } from '../Global/global.module';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     GlobalModule,
-    ManagementRoutingModule,
+    GlobalRoutingModule,
   ],
 })
 export class ManagementModule {}

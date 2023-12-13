@@ -17,6 +17,13 @@ const routes: Routes = [
       import('./Management/management.module').then((m) => m.ManagementModule),
     /* canMatch: [isLoggedGuard, hasRoleGuard(['Admin', 'Employee'])], */
   },
+  {
+    path: 'shop',
+    loadChildren: () =>
+      import('./Shop/shop.module').then((m) => m.ShopModule),
+    /* canMatch: [isLoggedGuard], */
+
+  },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 

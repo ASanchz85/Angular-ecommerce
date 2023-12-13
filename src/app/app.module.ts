@@ -7,20 +7,18 @@ import { LoginComponent } from './Login/components/login/login.component';
 import { SignupComponent } from './Login/components/signup/signup.component';
 import { ManagementModule } from './Management/management.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ShopModule } from './Shop/shop.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    SignupComponent
-  ],
+  declarations: [AppComponent, LoginComponent, SignupComponent],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     AppRoutingModule,
     ManagementModule,
+    ShopModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

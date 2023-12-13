@@ -7,9 +7,15 @@ import { ProductService } from 'src/app/services/product.service';
 @Component({
   selector: 'app-list-product',
   templateUrl: './list-product.component.html',
+  styles: [
+    '.input-custom { border: 1px thin lightgray; width: 40px; border-radius: 10px; padding: 5px 0 5px 0; }',
+    '.table-layout { height: 70px; padding: 20px 0 20px 0; }',
+  ],
 })
 export class ListProductComponent implements OnInit {
   title = 'List of product';
+  stock = 1;
+  margin = 10;
   productsList: Product[] = [];
 
   constructor(
@@ -40,7 +46,7 @@ export class ListProductComponent implements OnInit {
       .pipe(
         //TODO DOBLE VERIFICACIÓN -> MODAL
         catchError((error) => {
-          console.warn(error)
+          console.warn(error);
           if (error.status === 500) {
             alert(error.error);
           } else {
@@ -51,10 +57,13 @@ export class ListProductComponent implements OnInit {
         })
       )
       .subscribe(() => {
-        this.productsList = this.productsList.filter((elem) => elem._id !== product._id);
+        this.productsList = this.productsList.filter(
+          (elem) => elem._id !== product._id
+        );
         this._cr.detectChanges();
-        
-        //window.location.reload();
       });
   }
+
+  //TODO
+  salesCorner(product: Product) {}
 }
