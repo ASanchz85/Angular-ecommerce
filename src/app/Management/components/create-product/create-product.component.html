@@ -64,9 +64,12 @@
                 formControlName="image"
                 class="form-control form-control-lg"
                 placeholder="URL for image"
-                (mouseover)="showPopover()"
+                (mouseover)="
+                  productForm.value.isImgFile ? showPopover() : restartPopover()
+                "
+                (mouseleave)="restartPopover()"
                 (change)="setImg($event)"
-                />
+              />
               <div class="text-danger" *ngIf="validateInput('image')">
                 <span>Add your <strong>image</strong> please</span>
               </div>

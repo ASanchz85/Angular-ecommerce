@@ -17,7 +17,7 @@
               <th scope="col">Location</th>
               <th scope="col">Price</th>
               <th scope="col">Image</th>
-              <th scope="col">Actions</th>
+              <th scope="col" class="text-center">Actions</th>
             </thead>
             <tbody>
               <tr *ngFor="let product of productsList">
@@ -36,7 +36,7 @@
                   <!-- modal para mostrar imagen -->
                 </td>
                 <ng-template [appRoles]="['Employee', 'Admin']">
-                  <td>
+                  <td class="table-layout">
                     <i
                       (click)="editProduct(product)"
                       type="button"

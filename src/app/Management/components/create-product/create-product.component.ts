@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError } from 'rxjs';
 import { Product } from 'src/app/models/product';
+import { AuthService } from 'src/app/services/auth.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -16,12 +17,14 @@ export class CreateProductComponent implements OnInit {
   productForm: FormGroup;
   preview!: string;
   currentProduct!: Product;
+  private _credentials!: string;
 
   constructor(
     private _fb: FormBuilder,
     private _pServ: ProductService,
     private _router: Router,
-    private _ar: ActivatedRoute
+    private _ar: ActivatedRoute,
+    private _authS: AuthService
   ) {
     this.productForm = this._fb.group({
       name: ['', [Validators.required]],
@@ -35,6 +38,9 @@ export class CreateProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.asEdit();
+    /* this._authS
+      .getCredentials()
+      .subscribe((creds) => (this._credentials = creds.toString())); */
   }
 
   showPopover() {

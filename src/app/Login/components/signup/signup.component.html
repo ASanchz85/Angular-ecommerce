@@ -9,7 +9,7 @@
               class="mb-3"
               *ngFor="
                 let param of [
-                  'userName',
+                  'username',
                   'email',
                   'password',
                   'confirmPassword'
@@ -25,6 +25,7 @@
                     : 'password'
                 "
                 [formControlName]="param"
+                [name]="param"
                 class="form-control form-control-lg"
                 [placeholder]="
                   param !== 'confirmPassword'
@@ -63,9 +64,11 @@
                   }}</strong>
                   {{
                     param !== "password"
-                      ? param !== "email"
-                        ? "should have at least three characters"
-                        : "should be a correct email address"
+                      ? param !== "confirmPassword"
+                        ? param !== "email"
+                          ? "should have at least three characters"
+                          : "should be a correct email address"
+                        : "should have at least eight characters, including numbers and special characters"
                       : "should have at least eight characters, including numbers and special characters"
                   }}</span
                 >
@@ -88,6 +91,7 @@
               </button>
             </div>
           </form>
+          <span class="title">{{ passNotConfimed | uppercase }}</span>
         </div>
       </div>
     </div>

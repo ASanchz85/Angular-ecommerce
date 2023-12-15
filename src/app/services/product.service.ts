@@ -15,7 +15,7 @@ export class ProductService {
     return this._http.post<Product>(this._URL, product);
   }
 
-  getAllProducts(): Observable<Product> {
+  getAllProducts(): Observable<any> {
     return this._http.get<Product>(this._URL);
   }
 
@@ -23,7 +23,18 @@ export class ProductService {
     return this._http.put<Product>(this._URL + _id, product);
   }
 
-  deleteProduct(_id: any): Observable<Product> {
-    return this._http.delete<Product>(this._URL + _id)
+  deleteProduct(_id: any): Observable<any> {
+    return this._http.delete<Product>(this._URL + _id);
   }
+
+  //?? header format
+  /* addHeader(credentials: string) {
+    return {
+      headers: {
+        'Authorization': `Basic ${credentials}`,
+        'Content-type': 'application/json',
+      },
+      withCredentials: true,
+    };
+  } */
 }

@@ -9,7 +9,7 @@ import { ProductService } from 'src/app/services/product.service';
   templateUrl: './list-product.component.html',
   styles: [
     '.input-custom { border: 1px thin lightgray; width: 40px; border-radius: 10px; padding: 5px 0 5px 0; }',
-    '.table-layout { height: 70px; padding: 20px 0 20px 0; }',
+    '.table-layout { height: 70px; padding: 20px 0 15px 0; }',
   ],
 })
 export class ListProductComponent implements OnInit {
@@ -22,7 +22,7 @@ export class ListProductComponent implements OnInit {
     private _ps: ProductService,
     private _ar: ActivatedRoute,
     private _router: Router,
-    private _cr: ChangeDetectorRef
+    private _cdr: ChangeDetectorRef
   ) {
     this._ar.data.subscribe((data: any) => {
       this.productsList = data.productList;
@@ -56,11 +56,11 @@ export class ListProductComponent implements OnInit {
           throw error;
         })
       )
-      .subscribe(() => {
-        this.productsList = this.productsList.filter(
-          (elem) => elem._id !== product._id
-        );
-        this._cr.detectChanges();
+      .subscribe((data) => {
+        if (data.success)
+          this._ps
+            .getAllProducts()
+            .subscribe((items) => (this.productsList = items));
       });
   }
 
